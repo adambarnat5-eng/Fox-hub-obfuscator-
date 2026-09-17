@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>FOX HUB | Obfuscator</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background:
+        radial-gradient(circle at top,#241300 0%,#0b0b0b 40%,#050505 100%);
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    padding:22px 18px;
+    border-bottom:1px solid #292929;
+    background:rgba(5,5,5,.85);
+    backdrop-filter:blur(15px);
+}
+
+.nav{
+    max-width:1050px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:#ff7a00;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:900;
+    color:#050505;
+    box-shadow:0 0 25px rgba(255,122,0,.25);
+}
+
+.brand-name{
+    font-size:20px;
+    font-weight:900;
+}
+
+.brand-name span{
+    color:#ff7a00;
+}
+
+.badge{
+    font-size:11px;
+    padding:6px 9px;
+    border-radius:20px;
+    background:#171717;
+    color:#999;
+    border:1px solid #292929;
+}
+
+.container{
+    max-width:1050px;
+    margin:auto;
+    padding:30px 18px;
+}
+
+.hero{
+    margin-bottom:25px;
+}
+
+.hero h1{
+    margin:0;
+    font-size:38px;
+}
+
+.hero h1 span{
+    color:#ff7a00;
+}
+
+.hero p{
+    color:#777;
+    margin-top:8px;
+}
+
+.card{
+    background:rgba(15,15,15,.88);
+    border:1px solid #292929;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+.label{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+    color:#aaa;
+    font-size:13px;
+}
+
+textarea{
+    width:100%;
+    min-height:300px;
+    resize:vertical;
+    border:1px solid #292929;
+    border-radius:14px;
+    background:#090909;
+    color:#eee;
+    padding:16px;
+    outline:none;
+    font-family:Consolas,monospace;
+    font-size:14px;
+    line-height:1.5;
+}
+
+textarea:focus{
+    border-color:#ff7a00;
+    box-shadow:0 0 0 2px rgba(255,122,0,.08);
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+select,
+button{
+    min-height:45px;
+    border-radius:11px;
+    padding:0 16px;
+    font-weight:800;
+    font-size:13px;
+}
+
+select{
+    background:#111;
+    color:white;
+    border:1px solid #292929;
+}
+
+button{
+    border:0;
+    cursor:pointer;
+    background:#ff7a00;
+    color:#050505;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 8px 25px rgba(255,122,0,.18);
+}
+
+.secondary{
+    background:#171717;
+    color:white;
+    border:1px solid #292929;
+}
+
+.status{
+    color:#777;
+    font-size:12px;
+    margin:10px 2px;
+}
+
+.footer{
+    text-align:center;
+    color:#444;
+    font-size:11px;
+    margin-top:22px;
+}
+
+@media(max-width:650px){
+
+    .hero h1{
+        font-size:29px;
+    }
+
+    .controls > *{
+        width:100%;
+    }
+
+    textarea{
+        min-height:230px;
+    }
+
+    .badge{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+
+        <div class="brand">
+            <div class="logo">F</div>
+
+            <div class="brand-name">
+                FOX <span>HUB</span>
+            </div>
+        </div>
+
+        <div class="badge">
+            OBFUSCATOR
+        </div>
+
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+        <h1>
+            FOX <span>HUB</span> OBFUSCATOR
+        </h1>
+
+        <p>
+            Protect and transform your Lua source locally in your browser
+        </p>
+    </section>
+
+
+    <div class="card">
+
+        <div class="label">
+            <span>INPUT LUA</span>
+            <span>LOCAL PROCESSING</span>
+        </div>
+
+        <textarea
+            id="input"
+            placeholder="Paste your Lua script here..."
+        ></textarea>
+
+
+        <div class="controls">
+
+            <select id="level">
+                <option value="1">Light Protection</option>
+                <option value="2">Medium Protection</option>
+                <option value="3">Heavy Protection</option>
+            </select>
+
+            <button onclick="obfuscate()">
+                OBFUSCATE
+            </button>
+
+            <button
+                class="secondary"
+                onclick="copyOutput()"
+            >
+                COPY
+            </button>
+
+            <button
+                class="secondary"
+                onclick="clearAll()"
+            >
+                CLEAR
+            </button>
+
+        </div>
+
+
+        <div
+            class="status"
+            id="status"
+        >
+            Ready
+        </div>
+
+
+        <div class="label">
+            <span>OUTPUT LUA</span>
+            <span>FOX HUB</span>
+        </div>
+
+        <textarea
+            id="output"
+            placeholder="Your obfuscated Lua will appear here..."
+            readonly
+        ></textarea>
+
+    </div>
+
+
+    <div class="footer">
+        FOX HUB • Client-side Lua obfuscator
+    </div>
+
+</main>
+
+
+<script>
+
+function randomName(){
+
+    const chars =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    let name = "_";
+
+    for(let i = 0; i < 10; i++){
+
+        name +=
+            chars[Math.floor(Math.random() * chars.length)];
+
+    }
+
+    return name;
+}
+
+
+function obfuscate(){
+
+    const input =
+        document.getElementById("input").value;
+
+    const level =
+        Number(document.getElementById("level").value);
+
+    const status =
+        document.getElementById("status");
+
+    if(!input.trim()){
+
+        status.textContent =
+            "Paste a Lua script first";
+
+        return;
+    }
+
+
+    let code = input;
+
+
+    // Remove single-line comments
+    code = code.replace(
+        /--[^\n]*/g,
+        ""
+    );
+
+
+    // Basic identifier renaming
+    const variables = [
+        "data",
+        "value",
+        "result",
+        "target",
+        "player",
+        "index",
+        "count",
+        "item"
+    ];
+
+
+    variables.forEach(variable => {
+
+        const replacement =
+            randomName();
+
+        const regex =
+            new RegExp(
+                "\\b" + variable + "\\b",
+                "g"
+            );
+
+        code =
+            code.replace(
+                regex,
+                replacement
+            );
+
+    });
+
+
+    // String escaping
+    if(level >= 2){
+
+        code =
+            code.replace(
+                /(["'])(.*?)\1/g,
+                function(match, quote, text){
+
+                    if(
+                        !text ||
+                        text.length > 80
+                    ){
+                        return match;
+                    }
+
+                    let encoded = "";
+
+                    for(
+                        let i = 0;
+                        i < text.length;
+                        i++
+                    ){
+
+                        encoded +=
+                            "\\" +
+                            text.charCodeAt(i);
+
+                    }
+
+                    return '"' + encoded + '"';
+
+                }
+            );
+
+    }
+
+
+    // Add harmless junk locals
+    if(level >= 3){
+
+        let junk = "";
+
+        for(
+            let i = 0;
+            i < 10;
+            i++
+        ){
+
+            junk +=
+                "local " +
+                randomName() +
+                " = " +
+                Math.floor(
+                    Math.random() * 999999
+                ) +
+                "\n";
+
+        }
+
+        code =
+            junk +
+            "\n" +
+            code;
+
+    }
+
+
+    const header =
+`-- FOX HUB OBFUSCATOR
+-- Protection Level: ${level}
+-- Generated locally
+
+`;
+
+
+    document.getElementById(
+        "output"
+    ).value =
+        header + code;
+
+
+    status.textContent =
+        "Obfuscation complete";
+
+}
+
+
+async function copyOutput(){
+
+    const output =
+        document.getElementById("output");
+
+    const status =
+        document.getElementById("status");
+
+    if(!output.value){
+
+        status.textContent =
+            "Nothing to copy";
+
+        return;
+
+    }
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            output.value
+        );
+
+        status.textContent =
+            "Copied to clipboard";
+
+    }catch{
+
+        output.select();
+
+        document.execCommand("copy");
+
+        status.textContent =
+            "Copied to clipboard";
+
+    }
+
+}
+
+
+function clearAll(){
+
+    document.getElementById(
+        "input"
+    ).value = "";
+
+    document.getElementById(
+        "output"
+    ).value = "";
+
+    document.getElementById(
+        "status"
+    ).textContent =
+        "Cleared";
+
+}
+
+</script>
+
+</body>
+</html>
